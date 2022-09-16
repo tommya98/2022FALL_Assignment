@@ -75,8 +75,27 @@ int main(int argc, char* argv[]) {
 
 
 int Maximum_Sum_Subrectangle_1(int **arr) {
+  int max = arr[0][0];
 
-  return 10000;
+  for(int left_top = 0; left_top < row; left_top++) {
+    for(int left_bottom = left_top; left_bottom < row; left_bottom++) {
+      for(int right_top = 0; right_top < column; right_top++) {
+        for(int right_bottom = right_top; right_bottom < column; right_bottom++) {
+          int sum = 0;
+          for(int i = left_top; i <= left_bottom; i++) {
+            for(int j = right_top; j <= right_bottom; j++) {
+              sum += arr[i][j];
+            }
+          }
+          if(sum > max) {
+            max = sum;
+          }
+        }
+      }
+    }
+  }
+
+  return max;
 }
 
 int Maximum_Sum_Subrectangle_2(int **arr) {
