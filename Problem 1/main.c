@@ -99,11 +99,38 @@ int Maximum_Sum_Subrectangle_1(int **arr) {
 }
 
 int Maximum_Sum_Subrectangle_2(int **arr) {
-  
-  return 20000;
+  int max = arr[0][0];
+  int tempsum[row + 1][column + 1];
+
+  for(int i = 0; i <= row; i++) {
+    for(int j = 0; j <= column; j++) {
+      if(i == 0 || j == 0) {
+        tempsum[i][j] = 0;
+      }
+      else {
+        tempsum[i][j] = tempsum[i - 1][j] + tempsum[i][j - 1] - tempsum[i - 1][j - 1] + arr[i - 1][j - 1];
+      }
+    }
+  }
+
+  for(int left_top = 0; left_top < row; left_top++) {
+    for(int left_bottom = left_top; left_bottom < row; left_bottom++) {
+      for(int right_top = 0; right_top < column; right_top++) {
+        for(int right_bottom = right_top; right_bottom < column; right_bottom++) {
+          int sum = tempsum[left_bottom + 1][right_bottom + 1] - tempsum[left_bottom + 1][right_top] - tempsum[left_top][right_bottom + 1] + tempsum[left_top][right_top];
+          if(sum > max) {
+            max = sum;
+          }
+        }
+      }
+    }
+  }
+
+  return max;
 }
 
 int Maximum_Sum_Subrectangle_3(int **arr) {
+  int max = arr[0][0];
 
-  return 30000;
+  return max;
 }
