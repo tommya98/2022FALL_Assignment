@@ -7,6 +7,7 @@
 int Maximum_Sum_Subrectangle_1(int **arr); //O(n^6) algorithm
 int Maximum_Sum_Subrectangle_2(int **arr); //O(n^4) algorithm
 int Maximum_Sum_Subrectangle_3(int **arr); //O(n^3) algorithm
+int kadane(int *tempsum); //kadane algorithm
 
 
 int row, column, sum;
@@ -130,7 +131,52 @@ int Maximum_Sum_Subrectangle_2(int **arr) {
 }
 
 int Maximum_Sum_Subrectangle_3(int **arr) {
-  int max = arr[0][0];
+  int max = arr[0][0], sum = 0;
+
+  for(int left = 0; left < column; left++) {
+    int tempsum[row];
+
+    for(int i = 0; i < row; i++) {
+      tempsum[i] = 0;
+    }
+
+    for(int right = left; right < column; right++) {
+      for(int i = 0; i < row; i++) {
+        tempsum[i] += arr[i][right];
+      }
+      sum = kadane(tempsum);
+      if(sum > max) {
+        max = sum;
+      }
+    }
+  }
+
+  return max;
+}
+
+int kadane(int *tempsum) {
+  int sum = 0, max = tempsum[0], flag = -1;
+
+  for(int i = 0; i < row; i++) {
+    sum += tempsum[i];
+    if(sum < 0) {
+      sum = 0;
+    }
+    else if(max < sum) {
+      max = sum;
+      flag = 1;
+    }
+  }
+
+  if(flag != -1) {
+    return max;
+  }
+
+  for (int i = 1; i < row; i++){
+    if (tempsum[i] > max) {
+      max = tempsum[i];
+    }
+  }
 
   return max;
 }
