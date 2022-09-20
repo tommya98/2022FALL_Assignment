@@ -531,3 +531,11 @@ list_min (struct list *list, list_less_func *less, void *aux)
     }
   return min;
 }
+
+void list_swap(struct list_elem *a, struct list_elem *b) {
+  
+}
+
+void list_suffle(struct list *list) {
+
+}

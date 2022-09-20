@@ -165,4 +165,17 @@ void list_unique (struct list *, struct list *duplicates,
 struct list_elem *list_max (struct list *, list_less_func *, void *aux);
 struct list_elem *list_min (struct list *, list_less_func *, void *aux);
 
+// Implement this function in Project #0-2
+// 1. list_swap
+// Parameter : Two list elements that will be swapped.
+// Return value: None.
+// Functionality: Swap two list elements in parameters.
+void list_swap(struct list_elem *a, struct list_elem *b);
+
+// 2. list_suffle
+// Parameter: List that will be shuffled.
+// Return value: None.
+// Functionality: Shuffle elements of LIST in the parameter.
+void list_suffle(struct list *list);
+
 #endif /* lib/kernel/list.h */
