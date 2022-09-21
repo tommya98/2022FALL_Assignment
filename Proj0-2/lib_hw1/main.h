@@ -14,9 +14,10 @@
 
 struct bitmap_item {
 	struct bitmap *bitmap;
-	struct bitmap_item *next;
 	char name[10];
-}; struct bitmap_item *bitmap_item_head = NULL;
+	bool is_full;
+};
+struct bitmap_item bitmap_array[10];
 
 void create_func(int *status);
 void dumpdata_func(int *status);

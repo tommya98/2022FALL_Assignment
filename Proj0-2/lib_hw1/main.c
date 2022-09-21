@@ -44,25 +44,16 @@ void create_func(int *status) {
 
     char new_bitmap_name[10];
     int new_bitmap_size;
-    struct bitmap_item *new_bitmap = (struct bitmap_item*)malloc(sizeof(struct bitmap_item));
-
     scanf("%s", new_bitmap_name);
     scanf("%d", &new_bitmap_size);
 
-		strcpy(new_bitmap->name, new_bitmap_name);
-		new_bitmap->bitmap = bitmap_create(new_bitmap_size);
-		new_bitmap->next = NULL;
-
-		if(bitmap_item_head == NULL) {
-      bitmap_item_head = new_bitmap;
+    struct bitmap_item *temp = bitmap_array;
+    while(temp->is_full == true) {
+      temp++;
     }
-		else {
-			struct bitmap_item *temp = bitmap_item_head;
-			while(temp->next != NULL) {
-        temp = temp->next;
-      }
-			temp->next = new_bitmap;
-		}
+    strcpy(temp->name, new_bitmap_name);
+    temp->bitmap = bitmap_create(new_bitmap_size);
+    temp->is_full = true;
   }
   else if(strcmp("hash", text) == 0) { // create hash
     *status = 2;
@@ -81,11 +72,14 @@ void dumpdata_func(int *status) {
   scanf("%s", name);
 
   if(*status == 1) { // dumpdata bitmap
-    struct bitmap_item *temp = bitmap_item_head;
-    while(strcmp(temp->name, name) != 0) {
-      temp = temp->next;
+    struct bitmap_item *temp = bitmap_array;
+    while(1) {
+      if(strcmp(temp->name, name) == 0) {
+        break;
+      }
+      temp++;
     }
-    
+
     for(int i = 0; i < bitmap_size(temp->bitmap); i++) {
       if(bitmap_test(temp->bitmap, i) == true) {
         printf("1");
@@ -111,32 +105,17 @@ void delete_func(int *status) {
   if(*status == 1) { //delete beatmap
     scanf("%s", name);
 
-    struct bitmap_item *temp = bitmap_item_head;
+    struct bitmap_item *temp = bitmap_array;
     while(1) {
-		  if(temp == NULL) {
+      if(strcmp(temp->name, name) == 0) {
         break;
       }
+      temp++;
+    }
 
-		  if(strcmp(temp->name, name) == 0) {
-		  	bitmap_destroy(temp->bitmap);
-        if(temp == bitmap_item_head) {
-		  		bitmap_item_head = NULL;
-		  		free(temp);
-		  		break;
-		  	}
-
-		  	struct bitmap_item *temp2 = bitmap_item_head;
-		  	while(temp->next != temp) {
-          temp2 = temp2->next;
-        }
-		  	temp2->next = temp2->next->next;
-		  	free(temp);
-		  	break;
-		  }
-		  else {
-        temp = temp->next;
-      }
-	  }
+    bitmap_destroy(temp->bitmap);
+    strcpy(temp->name, "");
+    temp->is_full = false;
   }
   else if(*status == 2) {
 
@@ -163,9 +142,12 @@ void bitmap_mark_func(void) {
   char name[10];
   scanf("%s", name);
 
-  struct bitmap_item *temp = bitmap_item_head;
-  while(strcmp(temp->name, name) != 0) {
-    temp = temp->next;
+  struct bitmap_item *temp = bitmap_array;
+  while(1) {
+    if(strcmp(temp->name, name) == 0) {
+      break;
+    }
+    temp++;
   }
 
   int a;
@@ -177,9 +159,12 @@ void bitmap_all_func(void) {
   char name[10];
   scanf("%s", name);
 
-  struct bitmap_item *temp = bitmap_item_head;
-  while(strcmp(temp->name, name) != 0) {
-    temp = temp->next;
+  struct bitmap_item *temp = bitmap_array;
+  while(1) {
+    if(strcmp(temp->name, name) == 0) {
+      break;
+    }
+    temp++;
   }
 
   int a, b;
@@ -190,10 +175,11 @@ void bitmap_all_func(void) {
   else {
     printf("false\n");
   }
+
 }
 
 void bitmap_any_func(void) {
-  
+  return;
 }
 
 
