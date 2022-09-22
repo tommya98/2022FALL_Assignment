@@ -151,6 +151,9 @@ void bitmap_func(char *text) {
   else if(strcmp("bitmap_set_all", text) == 0) {
     bitmap_set_all_func();
   }
+  else if(strcmp("bitmap_flip", text) == 0) {
+    bitmap_flip_func();
+  }
 }
 
 void bitmap_mark_func(void) {
@@ -315,6 +318,23 @@ void bitmap_set_all_func(void) {
   else {
     bitmap_set_all(temp->bitmap, false);
   }
+}
+
+void bitmap_flip_func(void) {
+  char name[10];
+  scanf("%s", name);
+
+  struct bitmap_item *temp = bitmap_array;
+  while(1) {
+    if(strcmp(temp->name, name) == 0) {
+      break;
+    }
+    temp++;
+  }
+
+  int a;
+  scanf("%d", &a);
+  bitmap_flip(temp->bitmap, a);
 }
 
 
