@@ -157,6 +157,9 @@ void bitmap_func(char *text) {
   else if(strcmp("bitmap_none", text) == 0) {
     bitmap_none_func();
   }
+  else if(strcmp("bitmap_reset", text) == 0) {
+    bitmap_reset_func();
+  }
 }
 
 void bitmap_mark_func(void) {
@@ -360,6 +363,23 @@ void bitmap_none_func(void) {
   else {
     printf("false\n");
   }
+}
+
+void bitmap_reset_func(void) {
+  char name[10];
+  scanf("%s", name);
+
+  struct bitmap_item *temp = bitmap_array;
+  while(1) {
+    if(strcmp(temp->name, name) == 0) {
+      break;
+    }
+    temp++;
+  }
+
+  int a;
+  scanf("%d", &a);
+  bitmap_reset(temp->bitmap, a);
 }
 
 void hash_func(char *text) {
