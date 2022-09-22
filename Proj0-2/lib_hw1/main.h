@@ -28,6 +28,7 @@ void bitmap_mark_func(void);
 void bitmap_all_func(void);
 void bitmap_any_func(void);
 void bitmap_contains_func(void);
+void bitmap_count_func(void);
 
 void hash_func(char *text);
 

@@ -139,6 +139,9 @@ void bitmap_func(char *text) {
   else if(strcmp("bitmap_contains", text) == 0) {
     bitmap_contains_func();
   }
+  else if(strcmp("bitmap_count", text) == 0) {
+    bitmap_count_func();
+  }
 }
 
 void bitmap_mark_func(void) {
@@ -227,6 +230,28 @@ void bitmap_contains_func(void) {
   else {
     printf("false\n");
   }
+}
+
+void bitmap_count_func(void) {
+  char name[10];
+  scanf("%s", name);
+
+  struct bitmap_item *temp = bitmap_array;
+  while(1) {
+    if(strcmp(temp->name, name) == 0) {
+      break;
+    }
+    temp++;
+  }
+
+  int a, b;
+  char c[6];
+  bool d = false;
+  scanf("%d %d %s", &a, &b, c);
+  if(strcmp(c, "true") == 0) {
+    d = true;
+  }
+  printf("%ld\n", bitmap_count(temp->bitmap, a, b, d));
 }
 
 
