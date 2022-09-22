@@ -142,6 +142,9 @@ void bitmap_func(char *text) {
   else if(strcmp("bitmap_count", text) == 0) {
     bitmap_count_func();
   }
+  else if(strcmp("bitmap_dump", text) == 0) {
+    bitmap_dump_func();
+  }
 }
 
 void bitmap_mark_func(void) {
@@ -252,6 +255,21 @@ void bitmap_count_func(void) {
     d = true;
   }
   printf("%ld\n", bitmap_count(temp->bitmap, a, b, d));
+}
+
+void bitmap_dump_func(void) {
+  char name[10];
+  scanf("%s", name);
+
+  struct bitmap_item *temp = bitmap_array;
+  while(1) {
+    if(strcmp(temp->name, name) == 0) {
+      break;
+    }
+    temp++;
+  }
+
+  bitmap_dump(temp->bitmap);
 }
 
 
