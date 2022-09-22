@@ -169,6 +169,9 @@ void bitmap_func(char *text) {
   else if(strcmp("bitmap_set_multiple", text) == 0) {
     bitmap_set_multiple_func();
   }
+  else if(strcmp("bitmap_set", text) == 0) {
+    bitmap_set_func();
+  }
 }
 
 void bitmap_mark_func(void) {
@@ -458,6 +461,29 @@ void bitmap_set_multiple_func(void) {
   else {
     bitmap_set_multiple(temp->bitmap, a, b, false);
   }  
+}
+
+void bitmap_set_func(void) {
+  char name[10];
+  scanf("%s", name);
+
+  struct bitmap_item *temp = bitmap_array;
+  while(1) {
+    if(strcmp(temp->name, name) == 0) {
+      break;
+    }
+    temp++;
+  }
+
+  int a;
+  char b[10];
+  scanf("%d %s", &a, b);
+  if(strcmp(b, "true") == 0) {
+    bitmap_set(temp->bitmap, a, true);
+  }
+  else {
+    bitmap_set(temp->bitmap, a, false);
+  }    
 }
 
 
