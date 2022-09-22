@@ -154,6 +154,9 @@ void bitmap_func(char *text) {
   else if(strcmp("bitmap_flip", text) == 0) {
     bitmap_flip_func();
   }
+  else if(strcmp("bitmap_none", text) == 0) {
+    bitmap_none_func();
+  }
 }
 
 void bitmap_mark_func(void) {
@@ -337,6 +340,27 @@ void bitmap_flip_func(void) {
   bitmap_flip(temp->bitmap, a);
 }
 
+void bitmap_none_func(void) {
+  char name[10];
+  scanf("%s", name);
+
+  struct bitmap_item *temp = bitmap_array;
+  while(1) {
+    if(strcmp(temp->name, name) == 0) {
+      break;
+    }
+    temp++;
+  }
+
+  int a, b;
+  scanf("%d %d", &a, &b);
+  if(bitmap_none(temp->bitmap, a, b)) {
+    printf("true\n");
+  }
+  else {
+    printf("false\n");
+  }
+}
 
 void hash_func(char *text) {
   printf("hash_func\n");

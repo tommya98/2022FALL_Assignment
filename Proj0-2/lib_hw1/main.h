@@ -33,6 +33,7 @@ void bitmap_dump_func(void);
 void bitmap_expand_func(void);
 void bitmap_set_all_func(void);
 void bitmap_flip_func(void);
+void bitmap_none_func(void);
 
 void hash_func(char *text);
 
