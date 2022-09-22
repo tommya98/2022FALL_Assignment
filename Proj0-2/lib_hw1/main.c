@@ -172,6 +172,9 @@ void bitmap_func(char *text) {
   else if(strcmp("bitmap_set", text) == 0) {
     bitmap_set_func();
   }
+  else if(strcmp("bitmap_size", text) == 0) {
+    bitmap_size_func();
+  }
 }
 
 void bitmap_mark_func(void) {
@@ -484,6 +487,21 @@ void bitmap_set_func(void) {
   else {
     bitmap_set(temp->bitmap, a, false);
   }    
+}
+
+void bitmap_size_func(void) {
+  char name[10];
+  scanf("%s", name);
+
+  struct bitmap_item *temp = bitmap_array;
+  while(1) {
+    if(strcmp(temp->name, name) == 0) {
+      break;
+    }
+    temp++;
+  }
+
+  printf("%ld\n", bitmap_size(temp->bitmap));
 }
 
 
