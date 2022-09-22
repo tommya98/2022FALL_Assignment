@@ -177,17 +177,23 @@ void bitmap_func(char *text) {
   }
 }
 
-void bitmap_mark_func(void) {
-  char name[10];
-  scanf("%s", name);
-
+struct bitmap_item *find_bitmap_with_name(char *name) {
   struct bitmap_item *temp = bitmap_array;
+
   while(1) {
     if(strcmp(temp->name, name) == 0) {
       break;
     }
     temp++;
   }
+
+  return temp;
+}
+
+void bitmap_mark_func(void) {
+  char name[10];
+  scanf("%s", name);
+  struct bitmap_item *temp = find_bitmap_with_name(name);
 
   int a;
   scanf("%d", &a);
@@ -197,14 +203,7 @@ void bitmap_mark_func(void) {
 void bitmap_all_func(void) {
   char name[10];
   scanf("%s", name);
-
-  struct bitmap_item *temp = bitmap_array;
-  while(1) {
-    if(strcmp(temp->name, name) == 0) {
-      break;
-    }
-    temp++;
-  }
+  struct bitmap_item *temp = find_bitmap_with_name(name);
 
   int a, b;
   scanf("%d %d", &a, &b);
@@ -219,14 +218,7 @@ void bitmap_all_func(void) {
 void bitmap_any_func(void) {
   char name[10];
   scanf("%s", name);
-
-  struct bitmap_item *temp = bitmap_array;
-  while(1) {
-    if(strcmp(temp->name, name) == 0) {
-      break;
-    }
-    temp++;
-  }
+  struct bitmap_item *temp = find_bitmap_with_name(name);
 
   int a, b;
   scanf("%d %d", &a, &b);
@@ -241,14 +233,7 @@ void bitmap_any_func(void) {
 void bitmap_contains_func(void) {
   char name[10];
   scanf("%s", name);
-
-  struct bitmap_item *temp = bitmap_array;
-  while(1) {
-    if(strcmp(temp->name, name) == 0) {
-      break;
-    }
-    temp++;
-  }
+  struct bitmap_item *temp = find_bitmap_with_name(name);
 
   int a, b;
   char c[6];
@@ -268,14 +253,7 @@ void bitmap_contains_func(void) {
 void bitmap_count_func(void) {
   char name[10];
   scanf("%s", name);
-
-  struct bitmap_item *temp = bitmap_array;
-  while(1) {
-    if(strcmp(temp->name, name) == 0) {
-      break;
-    }
-    temp++;
-  }
+  struct bitmap_item *temp = find_bitmap_with_name(name);
 
   int a, b;
   char c[6];
@@ -290,14 +268,7 @@ void bitmap_count_func(void) {
 void bitmap_dump_func(void) {
   char name[10];
   scanf("%s", name);
-
-  struct bitmap_item *temp = bitmap_array;
-  while(1) {
-    if(strcmp(temp->name, name) == 0) {
-      break;
-    }
-    temp++;
-  }
+  struct bitmap_item *temp = find_bitmap_with_name(name);
 
   bitmap_dump(temp->bitmap);
 }
@@ -305,14 +276,7 @@ void bitmap_dump_func(void) {
 void bitmap_expand_func(void) {
   char name[10];
   scanf("%s", name);
-
-  struct bitmap_item *temp = bitmap_array;
-  while(1) {
-    if(strcmp(temp->name, name) == 0) {
-      break;
-    }
-    temp++;
-  }
+  struct bitmap_item *temp = find_bitmap_with_name(name);
 
   int a;
   scanf("%d", &a);
@@ -322,14 +286,7 @@ void bitmap_expand_func(void) {
 void bitmap_set_all_func(void) {
   char name[10];
   scanf("%s", name);
-
-  struct bitmap_item *temp = bitmap_array;
-  while(1) {
-    if(strcmp(temp->name, name) == 0) {
-      break;
-    }
-    temp++;
-  }
+  struct bitmap_item *temp = find_bitmap_with_name(name);
 
   char a[10];
   scanf("%s", a);
@@ -344,14 +301,7 @@ void bitmap_set_all_func(void) {
 void bitmap_flip_func(void) {
   char name[10];
   scanf("%s", name);
-
-  struct bitmap_item *temp = bitmap_array;
-  while(1) {
-    if(strcmp(temp->name, name) == 0) {
-      break;
-    }
-    temp++;
-  }
+  struct bitmap_item *temp = find_bitmap_with_name(name);
 
   int a;
   scanf("%d", &a);
@@ -361,14 +311,7 @@ void bitmap_flip_func(void) {
 void bitmap_none_func(void) {
   char name[10];
   scanf("%s", name);
-
-  struct bitmap_item *temp = bitmap_array;
-  while(1) {
-    if(strcmp(temp->name, name) == 0) {
-      break;
-    }
-    temp++;
-  }
+  struct bitmap_item *temp = find_bitmap_with_name(name);
 
   int a, b;
   scanf("%d %d", &a, &b);
@@ -383,14 +326,7 @@ void bitmap_none_func(void) {
 void bitmap_reset_func(void) {
   char name[10];
   scanf("%s", name);
-
-  struct bitmap_item *temp = bitmap_array;
-  while(1) {
-    if(strcmp(temp->name, name) == 0) {
-      break;
-    }
-    temp++;
-  }
+  struct bitmap_item *temp = find_bitmap_with_name(name);
 
   int a;
   scanf("%d", &a);
@@ -400,14 +336,7 @@ void bitmap_reset_func(void) {
 void bitmap_scan_and_flip_func(void) {
   char name[10];
   scanf("%s", name);
-
-  struct bitmap_item *temp = bitmap_array;
-  while(1) {
-    if(strcmp(temp->name, name) == 0) {
-      break;
-    }
-    temp++;
-  }
+  struct bitmap_item *temp = find_bitmap_with_name(name);
 
   int a, b;
   char c[10];
@@ -423,14 +352,7 @@ void bitmap_scan_and_flip_func(void) {
 void bitmap_scan_func(void) {
   char name[10];
   scanf("%s", name);
-
-  struct bitmap_item *temp = bitmap_array;
-  while(1) {
-    if(strcmp(temp->name, name) == 0) {
-      break;
-    }
-    temp++;
-  }
+  struct bitmap_item *temp = find_bitmap_with_name(name);
 
   int a, b;
   char c[10];
@@ -446,14 +368,7 @@ void bitmap_scan_func(void) {
 void bitmap_set_multiple_func(void) {
   char name[10];
   scanf("%s", name);
-
-  struct bitmap_item *temp = bitmap_array;
-  while(1) {
-    if(strcmp(temp->name, name) == 0) {
-      break;
-    }
-    temp++;
-  }
+  struct bitmap_item *temp = find_bitmap_with_name(name);
 
   int a, b;
   char c[10];
@@ -469,14 +384,7 @@ void bitmap_set_multiple_func(void) {
 void bitmap_set_func(void) {
   char name[10];
   scanf("%s", name);
-
-  struct bitmap_item *temp = bitmap_array;
-  while(1) {
-    if(strcmp(temp->name, name) == 0) {
-      break;
-    }
-    temp++;
-  }
+  struct bitmap_item *temp = find_bitmap_with_name(name);
 
   int a;
   char b[10];
@@ -492,14 +400,7 @@ void bitmap_set_func(void) {
 void bitmap_size_func(void) {
   char name[10];
   scanf("%s", name);
-
-  struct bitmap_item *temp = bitmap_array;
-  while(1) {
-    if(strcmp(temp->name, name) == 0) {
-      break;
-    }
-    temp++;
-  }
+  struct bitmap_item *temp = find_bitmap_with_name(name);
 
   printf("%ld\n", bitmap_size(temp->bitmap));
 }

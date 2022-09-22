@@ -24,6 +24,7 @@ void dumpdata_func(int *status);
 void delete_func(int *status);
 
 void bitmap_func(char *text);
+struct bitmap_item *find_bitmap_with_name(char * name);
 void bitmap_mark_func(void);
 void bitmap_all_func(void);
 void bitmap_any_func(void);
