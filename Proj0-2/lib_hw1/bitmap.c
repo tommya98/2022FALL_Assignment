@@ -374,3 +374,16 @@ bitmap_dump (const struct bitmap *b)
   hex_dump (0, b->bits, byte_cnt (b->bit_cnt)/2, false);
 }
 
+// Implement this function in Project #0-2
+// Expand the given BITMAP to the SIZE (backward expansion)
+struct bitmap *bitmap_expand(struct bitmap *bitmap, int size) {
+  struct bitmap *temp = bitmap_create(size);
+  
+  for(int i = 0; i < bitmap_size(bitmap); i++) {
+    bitmap_set_multiple(temp, i, 1, bitmap_any(bitmap, i, 1));
+  }
+
+  bitmap_destroy(bitmap);
+
+  return temp;
+}

@@ -145,6 +145,12 @@ void bitmap_func(char *text) {
   else if(strcmp("bitmap_dump", text) == 0) {
     bitmap_dump_func();
   }
+  else if(strcmp("bitmap_expand", text) == 0) {
+    bitmap_expand_func();
+  }
+  else if(strcmp("bitmap_set_all", text) == 0) {
+    bitmap_set_all_func();
+  }
 }
 
 void bitmap_mark_func(void) {
@@ -270,6 +276,45 @@ void bitmap_dump_func(void) {
   }
 
   bitmap_dump(temp->bitmap);
+}
+
+void bitmap_expand_func(void) {
+  char name[10];
+  scanf("%s", name);
+
+  struct bitmap_item *temp = bitmap_array;
+  while(1) {
+    if(strcmp(temp->name, name) == 0) {
+      break;
+    }
+    temp++;
+  }
+
+  int a;
+  scanf("%d", &a);
+  temp->bitmap = bitmap_expand(temp->bitmap, bitmap_size(temp->bitmap) + a);
+}
+
+void bitmap_set_all_func(void) {
+  char name[10];
+  scanf("%s", name);
+
+  struct bitmap_item *temp = bitmap_array;
+  while(1) {
+    if(strcmp(temp->name, name) == 0) {
+      break;
+    }
+    temp++;
+  }
+
+  char a[10];
+  scanf("%s", a);
+  if(strcmp(a, "true") == 0) {
+    bitmap_set_all(temp->bitmap, true);
+  }
+  else {
+    bitmap_set_all(temp->bitmap, false);
+  }
 }
 
 

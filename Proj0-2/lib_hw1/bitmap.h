@@ -48,4 +48,11 @@ bool bitmap_write (const struct bitmap *, struct file *);
 /* Debugging. */
 void bitmap_dump (const struct bitmap *);
 
+// Implement this function in Project #0-2
+// 1. bitmap_expand
+// Parameter : Bitmap that you want to expand and size of it
+// Return value: Expanded bitmap if succeed, NULL if fail
+// Functionality: Expand the given BITMAP to the SIZE (backward expansion)
+struct bitmap *bitmap_expand(struct bitmap *bitmap, int size);
+
 #endif /* lib/kernel/bitmap.h */
