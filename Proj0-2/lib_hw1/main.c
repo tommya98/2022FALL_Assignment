@@ -175,6 +175,9 @@ void bitmap_func(char *text) {
   else if(strcmp("bitmap_size", text) == 0) {
     bitmap_size_func();
   }
+  else if(strcmp("bitmap_test", text) == 0) {
+    bitmap_test_func();
+  }
 }
 
 struct bitmap_item *find_bitmap_with_name(char *name) {
@@ -403,6 +406,21 @@ void bitmap_size_func(void) {
   struct bitmap_item *temp = find_bitmap_with_name(name);
 
   printf("%ld\n", bitmap_size(temp->bitmap));
+}
+
+void bitmap_test_func(void) {
+  char name[10];
+  scanf("%s", name);
+  struct bitmap_item *temp = find_bitmap_with_name(name);
+
+  int a;
+  scanf("%d", &a);
+  if(bitmap_test(temp->bitmap, a) == true) {
+    printf("true\n");
+  }
+  else {
+    printf("false\n");
+  }
 }
 
 
