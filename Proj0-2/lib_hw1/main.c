@@ -163,6 +163,9 @@ void bitmap_func(char *text) {
   else if(strcmp("bitmap_scan_and_flip", text) == 0) {
     bitmap_scan_and_flip_func();
   }
+  else if(strcmp("bitmap_scan", text) == 0) {
+    bitmap_scan_func();
+  }
 }
 
 void bitmap_mark_func(void) {
@@ -407,6 +410,30 @@ void bitmap_scan_and_flip_func(void) {
     printf("%lu\n", bitmap_scan_and_flip(temp->bitmap, a, b, false));
   }
 }
+
+void bitmap_scan_func(void) {
+  char name[10];
+  scanf("%s", name);
+
+  struct bitmap_item *temp = bitmap_array;
+  while(1) {
+    if(strcmp(temp->name, name) == 0) {
+      break;
+    }
+    temp++;
+  }
+
+  int a, b;
+  char c[10];
+  scanf("%d %d %s", &a, &b, c);
+  if(strcmp(c, "true") == 0) {
+    printf("%lu\n", bitmap_scan(temp->bitmap, a, b, true));
+  }
+  else {
+    printf("%lu\n", bitmap_scan(temp->bitmap, a, b, false));
+  }  
+}
+
 
 void hash_func(char *text) {
   printf("hash_func\n");
