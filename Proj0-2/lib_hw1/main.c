@@ -182,7 +182,7 @@ void bitmap_mark_func(void) {
 
   int a;
   scanf("%d", &a);
-  bitmap_set_multiple(temp->bitmap, a, 1, true);
+  bitmap_mark(temp->bitmap, a);
 }
 
 void bitmap_all_func(void) {
