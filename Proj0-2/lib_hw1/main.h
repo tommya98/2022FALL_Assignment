@@ -37,6 +37,7 @@ void bitmap_none_func(void);
 void bitmap_reset_func(void);
 void bitmap_scan_and_flip_func(void);
 void bitmap_scan_func(void);
+void bitmap_set_multiple_func(void);
 
 void hash_func(char *text);
 
