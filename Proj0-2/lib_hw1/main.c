@@ -112,9 +112,9 @@ void delete_func(int *status) {
       }
       temp++;
     }
-
     bitmap_destroy(temp->bitmap);
-    strcpy(temp->name, "");
+    temp->bitmap = NULL;
+    strcpy(temp->name, "\0");
     temp->is_full = false;
   }
   else if(*status == 2) {
@@ -133,7 +133,7 @@ void bitmap_func(char *text) {
   else if(strcmp("bitmap_all", text) == 0) {
     bitmap_all_func();
   }
-  else if(strcmp("bitmap_any", text)) {
+  else if(strcmp("bitmap_any", text) == 0) {
     bitmap_any_func();
   }
 }
@@ -175,11 +175,28 @@ void bitmap_all_func(void) {
   else {
     printf("false\n");
   }
-
 }
 
 void bitmap_any_func(void) {
-  return;
+  char name[10];
+  scanf("%s", name);
+
+  struct bitmap_item *temp = bitmap_array;
+  while(1) {
+    if(strcmp(temp->name, name) == 0) {
+      break;
+    }
+    temp++;
+  }
+
+  int a, b;
+  scanf("%d %d", &a, &b);
+  if(bitmap_any(temp->bitmap, a, b) == true) {
+    printf("true\n");
+  }
+  else {
+    printf("false\n");
+  }
 }
 
 
