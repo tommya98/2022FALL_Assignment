@@ -72,5 +72,6 @@ void list_reverse_func(void);
 void list_shuffle_func(void);
 void list_sort_func(void);
 void list_splice_func(void);
+void list_swap_func(void);
 
 #endif

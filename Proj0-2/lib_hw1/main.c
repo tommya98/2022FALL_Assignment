@@ -496,6 +496,9 @@ void list_func(char *text) {
   else if(strcmp("list_splice", text) == 0) {
     list_splice_func();
   }
+  else if(strcmp("list_swap", text) == 0) {
+    list_swap_func();
+  }
 }
 
 struct list_node *find_list_with_name(char * name) {
@@ -691,13 +694,33 @@ void list_splice_func(void) {
   for(int i = 0; i < a; i++) {
     before = list_next(before);
   }
-  struct list_elem *first = list_head(temp2->list);
-  for(int i = 0; i <= b; i++) {
+  struct list_elem *first = list_begin(temp2->list);
+  for(int i = 0; i < b; i++) {
     first = list_next(first);
   }
-  struct list_elem *last = list_head(temp2->list);
-  for(int i = 0; i <= c; i++) {
+  struct list_elem *last = list_begin(temp2->list);
+  for(int i = 0; i < c; i++) {
     last = list_next(last);
   }
   list_splice(before, first, last);
+}
+
+void list_swap_func(void) {
+  char name[10];
+  scanf("%s", name);
+  struct list_node *temp = find_list_with_name(name);
+
+  int a, b;
+  scanf("%d %d", &a, &b);
+
+  struct list_elem *temp_elem1 = list_begin(temp->list);
+  for(int i = 0; i < a; i++) {
+    temp_elem1 = list_next(temp_elem1);
+  }
+  struct list_elem *temp_elem2 = list_begin(temp->list);
+  for(int i = 0; i < b; i++) {
+    temp_elem2 = list_next(temp_elem2);
+  }
+
+  list_swap(temp_elem1, temp_elem2);
 }
