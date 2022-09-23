@@ -272,7 +272,7 @@ void bitmap_count_func(void) {
   if(strcmp(c, "true") == 0) {
     d = true;
   }
-  printf("%ld\n", bitmap_count(temp->bitmap, a, b, d));
+  printf("%zu\n", bitmap_count(temp->bitmap, a, b, d));
 }
 
 void bitmap_dump_func(void) {
@@ -412,7 +412,7 @@ void bitmap_size_func(void) {
   scanf("%s", name);
   struct bitmap_node *temp = find_bitmap_with_name(name);
 
-  printf("%ld\n", bitmap_size(temp->bitmap));
+  printf("%zu\n", bitmap_size(temp->bitmap));
 }
 
 void bitmap_test_func(void) {
@@ -460,6 +460,18 @@ void list_func(char *text) {
   }
   else if(strcmp("list_insert_ordered", text) == 0) {
     list_insert_ordered_func();
+  }
+  else if(strcmp("list_empty", text) == 0) {
+    list_empty_func();
+  }
+  else if(strcmp("list_size", text) == 0) {
+    list_size_func();
+  }
+  else if(strcmp("list_max", text) == 0) {
+    list_max_func();
+  }
+  else if(strcmp("list_min", text) == 0) {
+    list_min_func();
   }
 }
 
@@ -561,4 +573,45 @@ void list_insert_ordered_func(void) {
   struct list_item *new_list = (struct list_item*)malloc(sizeof(struct list_item));
   new_list->data = a;
   list_insert_ordered(temp->list, &new_list->elem, list_less, NULL);
+}
+
+void list_empty_func(void) {
+  char name[10];
+  scanf("%s", name);
+  struct list_node *temp = find_list_with_name(name);
+
+  if(list_empty(temp->list)) {
+    printf("true\n");
+  }
+  else {
+    printf("false\n");
+  }
+}
+
+void list_size_func(void) {
+  char name[10];
+  scanf("%s", name);
+  struct list_node *temp = find_list_with_name(name);
+
+  printf("%zu\n", list_size(temp->list));
+}
+
+void list_max_func(void) {
+  char name[10];
+  scanf("%s", name);
+  struct list_node *temp = find_list_with_name(name);
+
+  struct list_elem * temp_elem = list_max(temp->list, list_less, NULL);
+
+  printf("%d\n", list_entry(temp_elem, struct list_item, elem)->data);
+}
+
+void list_min_func(void){
+  char name[10];
+  scanf("%s", name);
+  struct list_node *temp = find_list_with_name(name);
+
+  struct list_elem * temp_elem = list_min(temp->list, list_less, NULL);
+
+  printf("%d\n", list_entry(temp_elem, struct list_item, elem)->data);
 }

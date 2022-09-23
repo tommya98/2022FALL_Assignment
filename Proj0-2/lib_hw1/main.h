@@ -63,5 +63,9 @@ void list_pop_front_func(void);
 void list_pop_back_func(void);
 void list_insert_func(void);
 void list_insert_ordered_func(void);
+void list_empty_func(void);
+void list_size_func(void);
+void list_max_func(void);
+void list_min_func(void);
 
 #endif
