@@ -473,6 +473,9 @@ void list_func(char *text) {
   else if(strcmp("list_min", text) == 0) {
     list_min_func();
   }
+  else if(strcmp("list_remove", text) == 0) {
+    list_remove_func();
+  }
 }
 
 struct list_node *find_list_with_name(char * name) {
@@ -614,4 +617,18 @@ void list_min_func(void){
   struct list_elem * temp_elem = list_min(temp->list, list_less, NULL);
 
   printf("%d\n", list_entry(temp_elem, struct list_item, elem)->data);
+}
+
+void list_remove_func(void) {
+  char name[10];
+  scanf("%s", name);
+  struct list_node *temp = find_list_with_name(name);
+
+  int a;
+  scanf("%d", &a);
+  struct list_elem *temp_elem = list_begin(temp->list);
+  for(int i = 0; i < a; i++) {
+    temp_elem = list_next(temp_elem);
+  }
+  list_remove(temp_elem);
 }

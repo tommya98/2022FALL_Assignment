@@ -67,5 +67,6 @@ void list_empty_func(void);
 void list_size_func(void);
 void list_max_func(void);
 void list_min_func(void);
+void list_remove_func(void);
 
 #endif
