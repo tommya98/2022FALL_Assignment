@@ -47,7 +47,7 @@ void create_func(int *status) {
     scanf("%s", new_bitmap_name);
     scanf("%d", &new_bitmap_size);
 
-    struct bitmap_item *temp = bitmap_array;
+    struct bitmap_node *temp = bitmap_array;
     while(temp->is_full == true) {
       temp++;
     }
@@ -55,13 +55,22 @@ void create_func(int *status) {
     temp->bitmap = bitmap_create(new_bitmap_size);
     temp->is_full = true;
   }
-  else if(strcmp("hash", text) == 0) { // create hash
+  else if(strcmp("hashtable", text) == 0) { // create hash
     *status = 2;
-    
+
   }
   else if(strcmp("list", text) == 0) { // create list
     *status = 3;
-    
+    char new_list_name[10];
+    scanf("%s", new_list_name);
+
+    struct list_node *temp = list_array;
+    while(temp->is_full == true) {
+      temp++;
+    }
+    strcpy(temp->name, new_list_name);
+    list_init(temp->list);
+    temp->is_full = true;
   }
 }
 
@@ -72,13 +81,7 @@ void dumpdata_func(int *status) {
   scanf("%s", name);
 
   if(*status == 1) { // dumpdata bitmap
-    struct bitmap_item *temp = bitmap_array;
-    while(1) {
-      if(strcmp(temp->name, name) == 0) {
-        break;
-      }
-      temp++;
-    }
+    struct bitmap_node *temp = find_bitmap_with_name(name);
 
     for(int i = 0; i < bitmap_size(temp->bitmap); i++) {
       if(bitmap_test(temp->bitmap, i) == true) {
@@ -94,7 +97,14 @@ void dumpdata_func(int *status) {
 
   }
   else if(*status == 3) { //dumpdata list
+  struct list_node *temp_item = find_list_with_name(name);
 
+  struct list_elem *temp_elem = list_begin(temp_item->list);
+  for(struct list_elem *temp_elem = list_begin(temp_item->list); temp_elem != list_end(temp_item->list); temp_elem = list_next(temp_elem)) {
+    struct list_item *temp_entry = list_entry(temp_elem, struct list_item, elem);
+    printf("%d ", temp_entry->data);
+  }
+  printf("\n");
   }
 }
 
@@ -104,14 +114,8 @@ void delete_func(int *status) {
   
   if(*status == 1) { //delete beatmap
     scanf("%s", name);
+    struct bitmap_node *temp = find_bitmap_with_name(name);
 
-    struct bitmap_item *temp = bitmap_array;
-    while(1) {
-      if(strcmp(temp->name, name) == 0) {
-        break;
-      }
-      temp++;
-    }
     bitmap_destroy(temp->bitmap);
     temp->bitmap = NULL;
     strcpy(temp->name, "\0");
@@ -121,7 +125,12 @@ void delete_func(int *status) {
 
   }
   else if(*status == 3) {
+    scanf("%s", name);
+    struct list_node *temp = find_list_with_name(name);
 
+    temp->list = NULL;
+    strcpy(temp->name, "\0");
+    temp->is_full = false;
   }
 }
 
@@ -180,8 +189,8 @@ void bitmap_func(char *text) {
   }
 }
 
-struct bitmap_item *find_bitmap_with_name(char *name) {
-  struct bitmap_item *temp = bitmap_array;
+struct bitmap_node *find_bitmap_with_name(char *name) {
+  struct bitmap_node *temp = bitmap_array;
 
   while(1) {
     if(strcmp(temp->name, name) == 0) {
@@ -196,7 +205,7 @@ struct bitmap_item *find_bitmap_with_name(char *name) {
 void bitmap_mark_func(void) {
   char name[10];
   scanf("%s", name);
-  struct bitmap_item *temp = find_bitmap_with_name(name);
+  struct bitmap_node *temp = find_bitmap_with_name(name);
 
   int a;
   scanf("%d", &a);
@@ -206,7 +215,7 @@ void bitmap_mark_func(void) {
 void bitmap_all_func(void) {
   char name[10];
   scanf("%s", name);
-  struct bitmap_item *temp = find_bitmap_with_name(name);
+  struct bitmap_node *temp = find_bitmap_with_name(name);
 
   int a, b;
   scanf("%d %d", &a, &b);
@@ -221,7 +230,7 @@ void bitmap_all_func(void) {
 void bitmap_any_func(void) {
   char name[10];
   scanf("%s", name);
-  struct bitmap_item *temp = find_bitmap_with_name(name);
+  struct bitmap_node *temp = find_bitmap_with_name(name);
 
   int a, b;
   scanf("%d %d", &a, &b);
@@ -236,7 +245,7 @@ void bitmap_any_func(void) {
 void bitmap_contains_func(void) {
   char name[10];
   scanf("%s", name);
-  struct bitmap_item *temp = find_bitmap_with_name(name);
+  struct bitmap_node *temp = find_bitmap_with_name(name);
 
   int a, b;
   char c[6];
@@ -256,7 +265,7 @@ void bitmap_contains_func(void) {
 void bitmap_count_func(void) {
   char name[10];
   scanf("%s", name);
-  struct bitmap_item *temp = find_bitmap_with_name(name);
+  struct bitmap_node *temp = find_bitmap_with_name(name);
 
   int a, b;
   char c[6];
@@ -271,7 +280,7 @@ void bitmap_count_func(void) {
 void bitmap_dump_func(void) {
   char name[10];
   scanf("%s", name);
-  struct bitmap_item *temp = find_bitmap_with_name(name);
+  struct bitmap_node *temp = find_bitmap_with_name(name);
 
   bitmap_dump(temp->bitmap);
 }
@@ -279,7 +288,7 @@ void bitmap_dump_func(void) {
 void bitmap_expand_func(void) {
   char name[10];
   scanf("%s", name);
-  struct bitmap_item *temp = find_bitmap_with_name(name);
+  struct bitmap_node *temp = find_bitmap_with_name(name);
 
   int a;
   scanf("%d", &a);
@@ -289,7 +298,7 @@ void bitmap_expand_func(void) {
 void bitmap_set_all_func(void) {
   char name[10];
   scanf("%s", name);
-  struct bitmap_item *temp = find_bitmap_with_name(name);
+  struct bitmap_node *temp = find_bitmap_with_name(name);
 
   char a[10];
   scanf("%s", a);
@@ -304,7 +313,7 @@ void bitmap_set_all_func(void) {
 void bitmap_flip_func(void) {
   char name[10];
   scanf("%s", name);
-  struct bitmap_item *temp = find_bitmap_with_name(name);
+  struct bitmap_node *temp = find_bitmap_with_name(name);
 
   int a;
   scanf("%d", &a);
@@ -314,7 +323,7 @@ void bitmap_flip_func(void) {
 void bitmap_none_func(void) {
   char name[10];
   scanf("%s", name);
-  struct bitmap_item *temp = find_bitmap_with_name(name);
+  struct bitmap_node *temp = find_bitmap_with_name(name);
 
   int a, b;
   scanf("%d %d", &a, &b);
@@ -329,7 +338,7 @@ void bitmap_none_func(void) {
 void bitmap_reset_func(void) {
   char name[10];
   scanf("%s", name);
-  struct bitmap_item *temp = find_bitmap_with_name(name);
+  struct bitmap_node *temp = find_bitmap_with_name(name);
 
   int a;
   scanf("%d", &a);
@@ -339,7 +348,7 @@ void bitmap_reset_func(void) {
 void bitmap_scan_and_flip_func(void) {
   char name[10];
   scanf("%s", name);
-  struct bitmap_item *temp = find_bitmap_with_name(name);
+  struct bitmap_node *temp = find_bitmap_with_name(name);
 
   int a, b;
   char c[10];
@@ -355,7 +364,7 @@ void bitmap_scan_and_flip_func(void) {
 void bitmap_scan_func(void) {
   char name[10];
   scanf("%s", name);
-  struct bitmap_item *temp = find_bitmap_with_name(name);
+  struct bitmap_node *temp = find_bitmap_with_name(name);
 
   int a, b;
   char c[10];
@@ -371,7 +380,7 @@ void bitmap_scan_func(void) {
 void bitmap_set_multiple_func(void) {
   char name[10];
   scanf("%s", name);
-  struct bitmap_item *temp = find_bitmap_with_name(name);
+  struct bitmap_node *temp = find_bitmap_with_name(name);
 
   int a, b;
   char c[10];
@@ -387,7 +396,7 @@ void bitmap_set_multiple_func(void) {
 void bitmap_set_func(void) {
   char name[10];
   scanf("%s", name);
-  struct bitmap_item *temp = find_bitmap_with_name(name);
+  struct bitmap_node *temp = find_bitmap_with_name(name);
 
   int a;
   char b[10];
@@ -403,7 +412,7 @@ void bitmap_set_func(void) {
 void bitmap_size_func(void) {
   char name[10];
   scanf("%s", name);
-  struct bitmap_item *temp = find_bitmap_with_name(name);
+  struct bitmap_node *temp = find_bitmap_with_name(name);
 
   printf("%ld\n", bitmap_size(temp->bitmap));
 }
@@ -411,7 +420,7 @@ void bitmap_size_func(void) {
 void bitmap_test_func(void) {
   char name[10];
   scanf("%s", name);
-  struct bitmap_item *temp = find_bitmap_with_name(name);
+  struct bitmap_node *temp = find_bitmap_with_name(name);
 
   int a;
   scanf("%d", &a);
@@ -431,4 +440,17 @@ void hash_func(char *text) {
 
 void list_func(char *text) {
   printf("list_func\n");
+}
+
+struct list_node *find_list_with_name(char * name) {
+  struct list_node *temp = list_array;
+
+  while(1) {
+    if(strcmp(temp->name, name) == 0) {
+      break;
+    }
+    temp++;
+  }
+
+  return temp; 
 }

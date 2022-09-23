@@ -100,6 +100,12 @@ struct list
     struct list_elem tail;      /* List tail. */
   };
 
+// list_item
+struct list_item {
+	struct list_elem elem;
+	int data;
+};
+
 /* Converts pointer to list element LIST_ELEM into a pointer to
    the structure that LIST_ELEM is embedded inside.  Supply the
    name of the outer structure STRUCT and the member name MEMBER
