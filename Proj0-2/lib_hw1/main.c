@@ -69,11 +69,11 @@ void create_func(int *status) {
       temp++;
     }
     strcpy(temp->name, new_list_name);
+    temp->list = (struct list*)malloc(sizeof(struct list));
     list_init(temp->list);
     temp->is_full = true;
   }
 }
-
 
 void dumpdata_func(int *status) {
   char name[50];
@@ -107,7 +107,6 @@ void dumpdata_func(int *status) {
   printf("\n");
   }
 }
-
 
 void delete_func(int *status) {
   char name[10];
@@ -439,7 +438,24 @@ void hash_func(char *text) {
 
 
 void list_func(char *text) {
-  printf("list_func\n");
+  if(strcmp("list_push_front", text) == 0) {
+    list_push_front_func();
+  }
+  else if(strcmp("list_push_back", text) == 0) {
+    list_push_back_func();
+  }
+  else if(strcmp("list_front", text) == 0) {
+    list_front_func();
+  }
+  else if(strcmp("list_back", text) == 0) {
+    list_back_func();
+  }
+  else if(strcmp("list_pop_front", text) == 0) {
+    list_pop_front_func();
+  }
+  else if(strcmp("list_pop_back", text) == 0) {
+    list_pop_back_func();
+  }
 }
 
 struct list_node *find_list_with_name(char * name) {
@@ -453,4 +469,62 @@ struct list_node *find_list_with_name(char * name) {
   }
 
   return temp; 
+}
+
+void list_push_front_func(void) {
+  char name[10];
+  scanf("%s", name);
+  struct list_node *temp = find_list_with_name(name);
+
+  int a;
+  scanf("%d", &a);
+  struct list_item *new_list = (struct list_item*)malloc(sizeof(struct list_item));
+  new_list->data = a;
+  list_push_front(temp->list, &(new_list->elem));
+}
+
+void list_push_back_func(void) {
+  char name[10];
+  scanf("%s", name);
+  struct list_node *temp = find_list_with_name(name);
+
+  int a;
+  scanf("%d", &a);
+  struct list_item *new_list = (struct list_item*)malloc(sizeof(struct list_item));
+  new_list->data = a;
+  list_push_back(temp->list, &(new_list->elem));
+}
+
+void list_front_func(void) {
+  char name[10];
+  scanf("%s", name);
+  struct list_node *temp = find_list_with_name(name);
+
+  struct list_elem *temp_elem = list_front(temp->list);
+  printf("%d\n", list_entry(temp_elem, struct list_item, elem)->data);
+}
+
+void list_back_func(void) {
+  char name[10];
+  scanf("%s", name);
+  struct list_node *temp = find_list_with_name(name);
+
+  struct list_elem *temp_elem = list_back(temp->list);
+  printf("%d\n", list_entry(temp_elem, struct list_item, elem)->data);
+}
+
+void list_pop_front_func(void) {
+  char name[10];
+  scanf("%s", name);
+  struct list_node *temp = find_list_with_name(name);
+
+  list_pop_front(temp->list);
+}
+
+void list_pop_back_func(void) {
+  char name[10];
+  scanf("%s", name);
+  struct list_node *temp = find_list_with_name(name);
+
+  list_pop_back(temp->list);
 }
