@@ -532,6 +532,7 @@ list_min (struct list *list, list_less_func *less, void *aux)
   return min;
 }
 
+// Implement this function in Project #0-2
 void list_swap(struct list_elem *a, struct list_elem *b) {
   int t = list_entry(a, struct list_item, elem)->data;
   list_entry(a, struct list_item, elem)->data = list_entry(b, struct list_item, elem)->data;

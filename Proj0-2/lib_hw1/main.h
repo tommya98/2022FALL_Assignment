@@ -70,5 +70,6 @@ void list_min_func(void);
 void list_remove_func(void);
 void list_reverse_func(void);
 void list_shuffle_func(void);
+void list_sort_func(void);
 
 #endif

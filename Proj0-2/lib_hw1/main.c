@@ -482,6 +482,9 @@ void list_func(char *text) {
   else if(strcmp("list_shuffle", text) == 0) {
     list_shuffle_func();
   }
+  else if(strcmp("list_sort", text) == 0) {
+    list_sort_func();
+  }
 }
 
 struct list_node *find_list_with_name(char * name) {
@@ -653,4 +656,12 @@ void list_shuffle_func(void) {
   struct list_node *temp = find_list_with_name(name);
 
   list_shuffle(temp->list);
+}
+
+void list_sort_func(void) {
+  char name[10];
+  scanf("%s", name);
+  struct list_node *temp = find_list_with_name(name);
+
+  list_sort(temp->list, list_less, NULL);
 }
