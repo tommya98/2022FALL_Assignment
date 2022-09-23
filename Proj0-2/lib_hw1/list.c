@@ -539,3 +539,12 @@ void list_swap(struct list_elem *a, struct list_elem *b) {
 void list_suffle(struct list *list) {
 
 }
+
+bool list_less (const struct list_elem *a, const struct list_elem *b, void *aux){
+  if(list_entry(a, struct list_item, elem)->data < list_entry(b, struct list_item, elem)->data) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}

@@ -62,5 +62,6 @@ void list_back_func(void);
 void list_pop_front_func(void);
 void list_pop_back_func(void);
 void list_insert_func(void);
+void list_insert_ordered_func(void);
 
 #endif

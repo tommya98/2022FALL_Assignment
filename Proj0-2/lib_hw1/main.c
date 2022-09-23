@@ -458,6 +458,9 @@ void list_func(char *text) {
   else if(strcmp("list_insert", text) == 0) {
     list_insert_func();
   }
+  else if(strcmp("list_insert_ordered", text) == 0) {
+    list_insert_ordered_func();
+  }
 }
 
 struct list_node *find_list_with_name(char * name) {
@@ -546,4 +549,16 @@ void list_insert_func(void) {
     temp_elem = list_next(temp_elem);
   }
   list_insert(temp_elem, &(new_list->elem));
+}
+
+void list_insert_ordered_func(void) {
+  char name[10];
+  scanf("%s", name);
+  struct list_node *temp = find_list_with_name(name);
+
+  int a;
+  scanf("%d", &a);
+  struct list_item *new_list = (struct list_item*)malloc(sizeof(struct list_item));
+  new_list->data = a;
+  list_insert_ordered(temp->list, &new_list->elem, list_less, NULL);
 }

@@ -184,4 +184,7 @@ void list_swap(struct list_elem *a, struct list_elem *b);
 // Functionality: Shuffle elements of LIST in the parameter.
 void list_suffle(struct list *list);
 
+// 3. list_less
+bool list_less(const struct list_elem *a, const struct list_elem *b, void *aux);
+
 #endif /* lib/kernel/list.h */
