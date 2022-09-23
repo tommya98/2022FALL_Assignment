@@ -68,5 +68,7 @@ void list_size_func(void);
 void list_max_func(void);
 void list_min_func(void);
 void list_remove_func(void);
+void list_reverse_func(void);
+void list_shuffle_func(void);
 
 #endif

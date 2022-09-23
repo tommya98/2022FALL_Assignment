@@ -476,6 +476,12 @@ void list_func(char *text) {
   else if(strcmp("list_remove", text) == 0) {
     list_remove_func();
   }
+  else if(strcmp("list_reverse", text) == 0) {
+    list_reverse_func();
+  }
+  else if(strcmp("list_shuffle", text) == 0) {
+    list_shuffle_func();
+  }
 }
 
 struct list_node *find_list_with_name(char * name) {
@@ -631,4 +637,20 @@ void list_remove_func(void) {
     temp_elem = list_next(temp_elem);
   }
   list_remove(temp_elem);
+}
+
+void list_reverse_func(void) {
+  char name[10];
+  scanf("%s", name);
+  struct list_node *temp = find_list_with_name(name);
+
+  list_reverse(temp->list);
+}
+
+void list_shuffle_func(void) {
+  char name[10];
+  scanf("%s", name);
+  struct list_node *temp = find_list_with_name(name);
+
+  list_shuffle(temp->list);
 }

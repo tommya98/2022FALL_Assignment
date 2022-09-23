@@ -85,6 +85,8 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
+#include <stdlib.h>
+#include <time.h>
 
 /* List element. */
 struct list_elem 
@@ -182,7 +184,7 @@ void list_swap(struct list_elem *a, struct list_elem *b);
 // Parameter: List that will be shuffled.
 // Return value: None.
 // Functionality: Shuffle elements of LIST in the parameter.
-void list_suffle(struct list *list);
+void list_shuffle(struct list *list);
 
 // 3. list_less
 bool list_less(const struct list_elem *a, const struct list_elem *b, void *aux);

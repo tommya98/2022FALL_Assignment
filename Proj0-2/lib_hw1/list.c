@@ -533,11 +533,28 @@ list_min (struct list *list, list_less_func *less, void *aux)
 }
 
 void list_swap(struct list_elem *a, struct list_elem *b) {
-  
+  int t = list_entry(a, struct list_item, elem)->data;
+  list_entry(a, struct list_item, elem)->data = list_entry(b, struct list_item, elem)->data;
+  list_entry(b, struct list_item, elem)->data = t;
 }
 
-void list_suffle(struct list *list) {
+void list_shuffle(struct list *list) {
+  int len = list_size(list);
+  for(int i = 0; i < len; i++) {
+    srand(time(NULL));
+    int a = rand() % len;
 
+    struct list_elem *temp_elem1 = list_begin(list);
+    for(int j = 0; j < i; j++) {
+      temp_elem1 = list_next(temp_elem1);
+    }
+    struct list_elem *temp_elem2 = list_begin(list);
+    for(int j = 0; j < a; j++) {
+      temp_elem2 = list_next(temp_elem2);
+    }
+
+    list_swap(temp_elem1, temp_elem2);
+  }
 }
 
 bool list_less (const struct list_elem *a, const struct list_elem *b, void *aux){
