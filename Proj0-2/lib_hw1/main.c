@@ -83,6 +83,10 @@ void dumpdata_func(int *status) {
   if(*status == 1) { // dumpdata bitmap
     struct bitmap_node *temp = find_bitmap_with_name(name);
 
+    if(bitmap_size(temp->bitmap) == 0) {
+      return;
+    }
+
     for(int i = 0; i < bitmap_size(temp->bitmap); i++) {
       if(bitmap_test(temp->bitmap, i) == true) {
         printf("1");
@@ -98,6 +102,10 @@ void dumpdata_func(int *status) {
   }
   else if(*status == 3) { //dumpdata list
   struct list_node *temp_item = find_list_with_name(name);
+
+  if(list_size(temp_item->list) == 0) {
+    return;
+  }
 
   for(struct list_elem *temp_elem = list_begin(temp_item->list); temp_elem != list_end(temp_item->list); temp_elem = list_next(temp_elem)) {
     struct list_item *temp_entry = list_entry(temp_elem, struct list_item, elem);
@@ -485,6 +493,9 @@ void list_func(char *text) {
   else if(strcmp("list_sort", text) == 0) {
     list_sort_func();
   }
+  else if(strcmp("list_splice", text) == 0) {
+    list_splice_func();
+  }
 }
 
 struct list_node *find_list_with_name(char * name) {
@@ -664,4 +675,29 @@ void list_sort_func(void) {
   struct list_node *temp = find_list_with_name(name);
 
   list_sort(temp->list, list_less, NULL);
+}
+
+void list_splice_func(void) {
+  char name[10];
+  scanf("%s", name);
+  struct list_node *temp1 = find_list_with_name(name);
+  int a, b, c;
+  scanf("%d", &a);
+  scanf("%s", name);
+  struct list_node *temp2 = find_list_with_name(name);
+  scanf("%d %d", &b, &c);
+
+  struct list_elem *before = list_begin(temp1->list);
+  for(int i = 0; i < a; i++) {
+    before = list_next(before);
+  }
+  struct list_elem *first = list_head(temp2->list);
+  for(int i = 0; i <= b; i++) {
+    first = list_next(first);
+  }
+  struct list_elem *last = list_head(temp2->list);
+  for(int i = 0; i <= c; i++) {
+    last = list_next(last);
+  }
+  list_splice(before, first, last);
 }

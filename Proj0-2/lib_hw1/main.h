@@ -71,5 +71,6 @@ void list_remove_func(void);
 void list_reverse_func(void);
 void list_shuffle_func(void);
 void list_sort_func(void);
+void list_splice_func(void);
 
 #endif
