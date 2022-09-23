@@ -99,7 +99,6 @@ void dumpdata_func(int *status) {
   else if(*status == 3) { //dumpdata list
   struct list_node *temp_item = find_list_with_name(name);
 
-  struct list_elem *temp_elem = list_begin(temp_item->list);
   for(struct list_elem *temp_elem = list_begin(temp_item->list); temp_elem != list_end(temp_item->list); temp_elem = list_next(temp_elem)) {
     struct list_item *temp_entry = list_entry(temp_elem, struct list_item, elem);
     printf("%d ", temp_entry->data);
@@ -456,6 +455,9 @@ void list_func(char *text) {
   else if(strcmp("list_pop_back", text) == 0) {
     list_pop_back_func();
   }
+  else if(strcmp("list_insert", text) == 0) {
+    list_insert_func();
+  }
 }
 
 struct list_node *find_list_with_name(char * name) {
@@ -527,4 +529,21 @@ void list_pop_back_func(void) {
   struct list_node *temp = find_list_with_name(name);
 
   list_pop_back(temp->list);
+}
+
+void list_insert_func(void) {
+  char name[10];
+  scanf("%s", name);
+  struct list_node *temp = find_list_with_name(name);
+
+  int a, b;
+  scanf("%d %d", &a, &b);
+  struct list_item *new_list = (struct list_item*)malloc(sizeof(struct list_item));
+  new_list->data = b;
+
+  struct list_elem *temp_elem = list_begin(temp->list);
+  for(int i = 0; i < a; i++) {
+    temp_elem = list_next(temp_elem);
+  }
+  list_insert(temp_elem, &(new_list->elem));
 }

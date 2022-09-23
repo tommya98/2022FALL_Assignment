@@ -53,7 +53,6 @@ void bitmap_test_func(void);
 
 void hash_func(char *text);
 
-
 void list_func(char *text);
 struct list_node *find_list_with_name(char * name);
 void list_push_front_func(void);
@@ -62,6 +61,6 @@ void list_front_func(void);
 void list_back_func(void);
 void list_pop_front_func(void);
 void list_pop_back_func(void);
-
+void list_insert_func(void);
 
 #endif
