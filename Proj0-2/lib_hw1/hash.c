@@ -430,3 +430,16 @@ remove_elem (struct hash *h, struct hash_elem *e)
   list_remove (&e->list_elem);
 }
 
+// Implement this function in Project #0-2
+unsigned hash_hash(const struct hash_elem *a, void *aux) {
+	return hash_int(hash_entry(a, struct hash_item, hash_elem)->data);
+}
+
+bool hash_less(const struct hash_elem *a, const struct hash_elem *b, void *aux) {
+  if(hash_hash(a, aux) < hash_hash(b, aux))	{
+    return true;
+  }
+	else {
+    return false;
+  }
+}

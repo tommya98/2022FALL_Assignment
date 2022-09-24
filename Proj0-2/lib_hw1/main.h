@@ -19,6 +19,13 @@ struct bitmap_node {
 };
 struct bitmap_node bitmap_array[10];
 
+struct hash_node {
+	struct hash *hash;
+	char name[10];
+	bool is_full;
+};
+struct hash_node hash_array[10];
+
 struct list_node {
 	struct list *list;
 	char name[10];
@@ -32,7 +39,7 @@ void dumpdata_func(int *status);
 void delete_func(int *status);
 
 void bitmap_func(char *text);
-struct bitmap_node *find_bitmap_with_name(char * name);
+struct bitmap_node *find_bitmap_with_name(char *name);
 void bitmap_mark_func(void);
 void bitmap_all_func(void);
 void bitmap_any_func(void);
@@ -52,9 +59,10 @@ void bitmap_size_func(void);
 void bitmap_test_func(void);
 
 void hash_func(char *text);
+struct hash_node *find_hash_with_name(char *name);
 
 void list_func(char *text);
-struct list_node *find_list_with_name(char * name);
+struct list_node *find_list_with_name(char *name);
 void list_push_front_func(void);
 void list_push_back_func(void);
 void list_front_func(void);

@@ -58,6 +58,17 @@ void create_func(int *status) {
   else if(strcmp("hashtable", text) == 0) { // create hash
     *status = 2;
 
+    char new_hash_name[10];
+    scanf("%s", new_hash_name);
+
+    struct hash_node *temp = hash_array;
+    while(temp->is_full == true) {
+      temp++;
+    }
+    strcpy(temp->name, new_hash_name);
+    temp->hash = (struct hash*)malloc(sizeof(struct hash));
+    hash_init(temp->hash, hash_hash, hash_less, NULL);
+    temp->is_full = true;
   }
   else if(strcmp("list", text) == 0) { // create list
     *status = 3;
@@ -98,20 +109,35 @@ void dumpdata_func(int *status) {
     printf("\n");
   }
   else if(*status == 2) { //dumpdata hash
+    struct hash_node *temp_item = find_hash_with_name(name);
 
+    if(hash_size(temp_item->hash) == 0) {
+      return;
+    }
+
+    struct hash_iterator temp;
+    hash_first(&temp, temp_item->hash);
+    hash_next(&temp);
+    while(1) {
+      printf("%d ", hash_entry(hash_cur(&temp), struct hash_item, hash_elem)->data);
+      if(hash_next(&temp) == NULL) {
+        break;
+      }
+    }
+    printf("\n");
   }
   else if(*status == 3) { //dumpdata list
-  struct list_node *temp_item = find_list_with_name(name);
+    struct list_node *temp_item = find_list_with_name(name);
 
-  if(list_size(temp_item->list) == 0) {
-    return;
-  }
+    if(list_size(temp_item->list) == 0) {
+      return;
+    }
 
-  for(struct list_elem *temp_elem = list_begin(temp_item->list); temp_elem != list_end(temp_item->list); temp_elem = list_next(temp_elem)) {
-    struct list_item *temp_entry = list_entry(temp_elem, struct list_item, elem);
-    printf("%d ", temp_entry->data);
-  }
-  printf("\n");
+    for(struct list_elem *temp_elem = list_begin(temp_item->list); temp_elem != list_end(temp_item->list); temp_elem = list_next(temp_elem)) {
+      struct list_item *temp_entry = list_entry(temp_elem, struct list_item, elem);
+      printf("%d ", temp_entry->data);
+    }
+    printf("\n");
   }
 }
 
@@ -128,7 +154,12 @@ void delete_func(int *status) {
     temp->is_full = false;
   }
   else if(*status == 2) {
+    scanf("%s", name);
+    struct hash_node *temp = find_hash_with_name(name);
 
+    temp->hash = NULL;
+    strcpy(temp->name, "\0");
+    temp->is_full = false;
   }
   else if(*status == 3) {
     scanf("%s", name);
@@ -440,9 +471,21 @@ void bitmap_test_func(void) {
 
 
 void hash_func(char *text) {
-  printf("hash_func\n");
+  
 }
 
+struct hash_node *find_hash_with_name(char *name) {
+  struct hash_node *temp = hash_array;
+
+  while(1) {
+    if(strcmp(temp->name, name) == 0) {
+      break;
+    }
+    temp++;
+  }
+
+  return temp;
+}
 
 void list_func(char *text) {
   if(strcmp("list_push_front", text) == 0) {
@@ -504,7 +547,7 @@ void list_func(char *text) {
   }
 }
 
-struct list_node *find_list_with_name(char * name) {
+struct list_node *find_list_with_name(char *name) {
   struct list_node *temp = list_array;
 
   while(1) {
