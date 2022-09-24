@@ -499,6 +499,9 @@ void list_func(char *text) {
   else if(strcmp("list_swap", text) == 0) {
     list_swap_func();
   }
+  else if(strcmp("list_unique", text) == 0) {
+    list_unique_func();
+  }
 }
 
 struct list_node *find_list_with_name(char * name) {
@@ -723,4 +726,20 @@ void list_swap_func(void) {
   }
 
   list_swap(temp_elem1, temp_elem2);
+}
+
+void list_unique_func(void) {
+  char name[10], c;
+  scanf("%s", name);
+  struct list_node *temp = find_list_with_name(name);
+
+  scanf("%c", &c);
+  if(c == '\n') {
+    list_unique(temp->list, NULL, list_less, NULL); //input 1개
+  }
+  else {
+    scanf("%s", name);
+    struct list_node *temp2 = find_list_with_name(name);
+    list_unique(temp->list, temp2->list, list_less, NULL); //input 2개
+  }
 }

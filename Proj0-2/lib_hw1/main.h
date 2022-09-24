@@ -73,5 +73,6 @@ void list_shuffle_func(void);
 void list_sort_func(void);
 void list_splice_func(void);
 void list_swap_func(void);
+void list_unique_func(void);
 
 #endif
