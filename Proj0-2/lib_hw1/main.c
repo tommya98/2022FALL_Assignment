@@ -471,7 +471,9 @@ void bitmap_test_func(void) {
 
 
 void hash_func(char *text) {
-  
+  if(strcmp("hash_insert", text) == 0) {
+    hash_insert_func();
+  }
 }
 
 struct hash_node *find_hash_with_name(char *name) {
@@ -486,6 +488,19 @@ struct hash_node *find_hash_with_name(char *name) {
 
   return temp;
 }
+
+void hash_insert_func(void) {
+  char name[10];
+  scanf("%s", name);
+  struct hash_node *temp = find_hash_with_name(name);
+
+  int a;
+  scanf("%d", &a);
+  struct hash_item *new_hash = (struct hash_item*)malloc(sizeof(struct hash_item));
+  new_hash->data = a;
+  hash_insert(temp->hash, &(new_hash->hash_elem));
+}
+
 
 void list_func(char *text) {
   if(strcmp("list_push_front", text) == 0) {
