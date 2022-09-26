@@ -431,6 +431,14 @@ remove_elem (struct hash *h, struct hash_elem *e)
 }
 
 // Implement this function in Project #0-2
+unsigned hash_int_2(int i) {
+  i = ((i >> 16) ^ i) * 0x45d9f3b;
+  i = ((i >> 16) ^ i) * 0x45d9f3b;
+  i = (i >> 16) ^ i;
+
+  return i;
+}
+
 unsigned hash_hash(const struct hash_elem *a, void *aux) {
 	return hash_int(hash_entry(a, struct hash_item, hash_elem)->data);
 }

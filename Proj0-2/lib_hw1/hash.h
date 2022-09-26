@@ -107,11 +107,11 @@ unsigned hash_int (int);
 
 
 // Implement this function in Project #0-2
-// 1. 
-// Parameter : 
-// Return value : 
-// Functionality : 
-
+// 1. hash_int_2
+// Parameter : integer that will be hashed
+// Return value : Have value of integer I
+// Functionality : Implement this in your own way and describe it in the document.
+unsigned hash_int_2(int i);
 
 // 2. hash_hash
 unsigned hash_hash(const struct hash_elem *a, void *aux);
