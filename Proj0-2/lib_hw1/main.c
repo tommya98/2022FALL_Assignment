@@ -480,6 +480,15 @@ void hash_func(char *text) {
   else if(strcmp("hash_delete", text) == 0) {
     hash_delete_func();
   }
+  else if(strcmp("hash_empty", text) == 0) {
+    hash_empty_func();
+  }
+  else if(strcmp("hash_size", text) == 0) {
+    hash_size_func();
+  }
+  else if(strcmp("hash_clear", text) == 0) {
+    hash_clear_func();
+  }
 }
 
 struct hash_node *find_hash_with_name(char *name) {
@@ -532,6 +541,35 @@ void hash_delete_func(void) {
   struct hash_item *temp_item = (struct hash_item*)malloc(sizeof(struct hash_item));
   temp_item->data = a;
   hash_delete(temp->hash, &(temp_item->hash_elem));
+}
+
+void hash_empty_func(void) {
+  char name[10];
+  scanf("%s", name);
+  struct hash_node *temp = find_hash_with_name(name);
+
+  if(hash_empty(temp->hash)) {
+    printf("true\n");
+  }
+  else {
+    printf("false\n");
+  }
+}
+
+void hash_size_func(void) {
+  char name[10];
+  scanf("%s", name);
+  struct hash_node *temp = find_hash_with_name(name);
+
+  printf("%zu\n", hash_size(temp->hash));
+}
+
+void hash_clear_func(void) {
+  char name[10];
+  scanf("%s", name);
+  struct hash_node *temp = find_hash_with_name(name);
+
+  hash_clear(temp->hash, NULL);
 }
 
 

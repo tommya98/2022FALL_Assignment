@@ -63,6 +63,9 @@ struct hash_node *find_hash_with_name(char *name);
 void hash_insert_func(void);
 void hash_apply_func(void);
 void hash_delete_func(void);
+void hash_empty_func(void);
+void hash_size_func(void);
+void hash_clear_func(void);
 
 void list_func(char *text);
 struct list_node *find_list_with_name(char *name);
