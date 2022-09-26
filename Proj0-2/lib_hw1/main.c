@@ -492,6 +492,9 @@ void hash_func(char *text) {
   else if(strcmp("hash_find", text) == 0) {
     hash_find_func();
   }
+  else if(strcmp("hash_replace", text) == 0) {
+    hash_replace_func();
+  }
 }
 
 struct hash_node *find_hash_with_name(char *name) {
@@ -588,6 +591,18 @@ void hash_find_func(void) {
   if(temp_elem != NULL) {
     printf("%d\n", a);
   }
+}
+
+void hash_replace_func(void) {
+  char name[10];
+  scanf("%s", name);
+  struct hash_node *temp = find_hash_with_name(name);
+
+  int a;
+  scanf("%d", &a);
+  struct hash_item *temp_item = (struct hash_item*)malloc(sizeof(struct hash_item));
+  temp_item->data = a;
+  hash_replace(temp->hash, &(temp_item->hash_elem));
 }
 
 

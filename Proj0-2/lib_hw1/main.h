@@ -67,6 +67,7 @@ void hash_empty_func(void);
 void hash_size_func(void);
 void hash_clear_func(void);
 void hash_find_func(void);
+void hash_replace_func(void);
 
 void list_func(char *text);
 struct list_node *find_list_with_name(char *name);
