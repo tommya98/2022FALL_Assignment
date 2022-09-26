@@ -477,6 +477,9 @@ void hash_func(char *text) {
   else if(strcmp("hash_apply", text) == 0) {
     hash_apply_func();
   }
+  else if(strcmp("hash_delete", text) == 0) {
+    hash_delete_func();
+  }
 }
 
 struct hash_node *find_hash_with_name(char *name) {
@@ -517,6 +520,18 @@ void hash_apply_func(void) {
   else if(strcmp("triple", name) == 0) {
     hash_apply(temp->hash, hash_triple);
   }
+}
+
+void hash_delete_func(void) {
+  char name[10];
+  scanf("%s", name);
+  struct hash_node *temp = find_hash_with_name(name);
+
+  int a;
+  scanf("%d", &a);
+  struct hash_item *temp_item = (struct hash_item*)malloc(sizeof(struct hash_item));
+  temp_item->data = a;
+  hash_delete(temp->hash, &(temp_item->hash_elem));
 }
 
 
