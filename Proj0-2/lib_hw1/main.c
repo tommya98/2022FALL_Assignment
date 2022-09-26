@@ -33,6 +33,8 @@ int main(void) {
   return 0;
 }
 
+//-----------------------------------------------------------------
+// create, dumpdata, delete
 
 void create_func(int *status) {
   char text[50];
@@ -171,6 +173,8 @@ void delete_func(int *status) {
   }
 }
 
+//-----------------------------------------------------------------
+// bitmap
 
 void bitmap_func(char *text) {
   if(strcmp("bitmap_mark", text) == 0) {
@@ -469,6 +473,8 @@ void bitmap_test_func(void) {
   }
 }
 
+//-----------------------------------------------------------------
+// hash
 
 void hash_func(char *text) {
   if(strcmp("hash_insert", text) == 0) {
@@ -605,6 +611,8 @@ void hash_replace_func(void) {
   hash_replace(temp->hash, &(temp_item->hash_elem));
 }
 
+//-----------------------------------------------------------------
+// list
 
 void list_func(char *text) {
   if(strcmp("list_push_front", text) == 0) {

@@ -12,6 +12,7 @@
 #include <string.h>
 #include <stdlib.h>
 
+// struct node
 struct bitmap_node {
 	struct bitmap *bitmap;
 	char name[10];
@@ -33,11 +34,12 @@ struct list_node {
 };
 struct list_node list_array[10];
 
-
+// basic function
 void create_func(int *status);
 void dumpdata_func(int *status);
 void delete_func(int *status);
 
+// bitmap function
 void bitmap_func(char *text);
 struct bitmap_node *find_bitmap_with_name(char *name);
 void bitmap_mark_func(void);
@@ -58,6 +60,7 @@ void bitmap_set_func(void);
 void bitmap_size_func(void);
 void bitmap_test_func(void);
 
+// hash function
 void hash_func(char *text);
 struct hash_node *find_hash_with_name(char *name);
 void hash_insert_func(void);
@@ -69,6 +72,7 @@ void hash_clear_func(void);
 void hash_find_func(void);
 void hash_replace_func(void);
 
+// list function
 void list_func(char *text);
 struct list_node *find_list_with_name(char *name);
 void list_push_front_func(void);
