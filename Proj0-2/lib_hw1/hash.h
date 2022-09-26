@@ -119,4 +119,10 @@ unsigned hash_hash(const struct hash_elem *a, void *aux);
 // 3. list_less
 bool hash_less(const struct hash_elem *a, const struct hash_elem *b, void *aux);
 
+// 4. hash_square
+void hash_square(struct hash_elem *a, void *aux);
+
+// 5. hash_triple
+void hash_triple(struct hash_elem *a, void *aux);
+
 #endif /* lib/kernel/hash.h */

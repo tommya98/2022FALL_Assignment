@@ -443,3 +443,13 @@ bool hash_less(const struct hash_elem *a, const struct hash_elem *b, void *aux) 
     return false;
   }
 }
+
+void hash_square(struct hash_elem *a, void *aux) {
+	struct hash_item *temp = hash_entry(a, struct hash_item, hash_elem);
+	temp->data = temp->data * temp->data;
+}
+
+void hash_triple(struct hash_elem *a, void *aux) {
+	struct hash_item *temp = hash_entry(a, struct hash_item, hash_elem);
+	temp->data = temp->data * temp->data * temp->data;
+}

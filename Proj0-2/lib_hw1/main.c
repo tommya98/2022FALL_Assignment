@@ -474,6 +474,9 @@ void hash_func(char *text) {
   if(strcmp("hash_insert", text) == 0) {
     hash_insert_func();
   }
+  else if(strcmp("hash_apply", text) == 0) {
+    hash_apply_func();
+  }
 }
 
 struct hash_node *find_hash_with_name(char *name) {
@@ -499,6 +502,21 @@ void hash_insert_func(void) {
   struct hash_item *new_hash = (struct hash_item*)malloc(sizeof(struct hash_item));
   new_hash->data = a;
   hash_insert(temp->hash, &(new_hash->hash_elem));
+}
+
+void hash_apply_func(void) {
+  char name[10];
+  scanf("%s", name);
+  struct hash_node *temp = find_hash_with_name(name);
+
+  scanf("%s", name);
+  
+  if(strcmp("square", name) == 0) {
+    hash_apply(temp->hash, hash_square);
+  }
+  else if(strcmp("triple", name) == 0) {
+    hash_apply(temp->hash, hash_triple);
+  }
 }
 
 
