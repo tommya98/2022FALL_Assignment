@@ -52,6 +52,19 @@ syscall_handler (struct intr_frame *f UNUSED) {
       check_address(f->esp+12);
 		  f->eax = write((int)*(uint32_t*)(f->esp+4), (const void*)*(uint32_t*)(f->esp+8), (unsigned)*(uint32_t*)(f->esp+12));
       break;
+
+    case SYS_FIBO:
+      check_address(f->esp+4);
+      f->eax = fibo((int)*(uint32_t*)(f->esp+4));
+      break;
+
+    case SYS_MAX4:
+      check_address(f->esp+4);
+      check_address(f->esp+8);
+      check_address(f->esp+12);
+      check_address(f->esp+16);
+      f->eax = max4((int)*(uint32_t*)(f->esp+4), (int)*(uint32_t*)(f->esp+8), (int)*(uint32_t*)(f->esp+12), (int)*(uint32_t*)(f->esp+16));
+      break;
   }
 }
 
@@ -95,6 +108,37 @@ int write(int fd, const void *buffer, unsigned size) {
   else {
     return -1;
   }
+}
+
+// Proj 1 implement
+int fibo(int n) {
+  int a = 1, b = 1, c = 1;
+  if(n == 1 || n == 2) {
+    return 1;
+  }
+  else {
+    for(int i = 0; i < n - 2; i++) {
+      c = a + b;
+      a = b;
+      b = c;
+    }
+    return c;
+  }
+}
+
+int max4(int a, int b, int c, int d) {
+  int max = a;
+  if(b > max) {
+    max = b;
+  }
+  if(c > max) {
+    max = c;
+  }
+  if(d > max) {
+    max = d;
+  }
+
+  return max;
 }
 
 // Proj 1 implement : checks the validity of given User Memory Access
