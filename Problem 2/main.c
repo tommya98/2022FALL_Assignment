@@ -4,7 +4,8 @@
 #include <time.h>
 
 void argo1_insertion_sort(void);
-void argo2_quick_sort(void);
+void argo2_quick_sort(int left, int right);
+int quick_sort_partition(int left, int right);
 void argo3_merge_sort(void);
 void argo4_my_sort(void);
 
@@ -32,7 +33,7 @@ int main(int argc, char* argv[]) {
   }
   else if(argv[2][0] == '2') {
     start = clock();
-    argo2_quick_sort();
+    argo2_quick_sort(0, n - 1);
     end = clock();
   }
   else if(argv[2][0] == '3') {
@@ -78,10 +79,32 @@ void argo1_insertion_sort(void) {
   }
 }
 
-void argo2_quick_sort(void) {
+void argo2_quick_sort(int left, int right) {
+  if(left < right) {
+    int pivot = quick_sort_partition(left, right);
+    argo2_quick_sort(left, pivot - 1);
+    argo2_quick_sort(pivot + 1, right);
+  }
 
+}
 
-  return;
+int quick_sort_partition(int left, int right) {
+  int pivot = arr[right];
+  int index = left - 1;
+
+  for(int i = left; i < right; i++) {
+    if(arr[i] <= pivot) {
+      index++;
+      int temp = arr[i];
+      arr[i] = arr[index];
+      arr[index] = temp;
+    }
+  }
+
+  arr[right] = arr[index + 1];
+  arr[index + 1] = pivot;
+
+  return index + 1;
 }
 
 void argo3_merge_sort(void) {
