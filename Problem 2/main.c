@@ -6,7 +6,8 @@
 void argo1_insertion_sort(void);
 void argo2_quick_sort(int left, int right);
 int quick_sort_partition(int left, int right);
-void argo3_merge_sort(void);
+void argo3_merge_sort(int left, int right);
+void merge_sort_merge(int left, int middle, int right);
 void argo4_my_sort(void);
 
 int n;
@@ -38,7 +39,7 @@ int main(int argc, char* argv[]) {
   }
   else if(argv[2][0] == '3') {
     start = clock();
-    argo3_merge_sort();
+    argo3_merge_sort(0, n - 1);
     end = clock();    
   }
   else if(argv[2][0] == '4') {
@@ -107,10 +108,42 @@ int quick_sort_partition(int left, int right) {
   return index + 1;
 }
 
-void argo3_merge_sort(void) {
+void argo3_merge_sort(int left, int right) {
+  if(left < right) {
+    int middle = (left + right) / 2;
+    argo3_merge_sort(left, middle);
+    argo3_merge_sort(middle + 1, right);
+    merge_sort_merge(left, middle, right);
+  }
+}
 
+void merge_sort_merge(int left, int middle, int right) {
+  int n_left = middle - left + 1, n_right = right - middle, i = 0, j = 0, k = left;
 
-  return;
+  int *temp_left = (int*)malloc(sizeof(int) * n_left);
+  for(int t = 0; t < n_left; t++) {
+    temp_left[t] = arr[left + t];
+  }
+  int *temp_right = (int*)malloc(sizeof(int) * n_right);
+  for(int t = 0; t < n_right; t++) {
+    temp_right[t] = arr[middle + t + 1];
+  }
+
+  while(i < n_left && j < n_right) {
+    if(temp_left[i] <= temp_right[j]) {
+      arr[k++] = temp_left[i++];
+    }
+    else {
+      arr[k++] = temp_right[j++];
+    }
+  }
+
+  while(i < n_left) {
+    arr[k++] = temp_left[i++];
+  }
+  while(j < n_right) {
+    arr[k++] = temp_right[j++];
+  }
 }
 
 void argo4_my_sort(void) {
