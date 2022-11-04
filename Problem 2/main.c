@@ -3,7 +3,7 @@
 #include <string.h>
 #include <time.h>
 
-void argo1_insertion_sort(void);
+void argo1_insertion_sort(int left, int right);
 void argo2_quick_sort(int left, int right);
 int quick_sort_partition(int left, int right);
 void argo3_merge_sort(int left, int right);
@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
 
   if(argv[2][0] == '1') {
     start = clock();
-    argo1_insertion_sort();
+    argo1_insertion_sort(0, n - 1);
     end = clock();
   }
   else if(argv[2][0] == '2') {
@@ -69,11 +69,11 @@ int main(int argc, char* argv[]) {
   return 0;
 }
 
-void argo1_insertion_sort(void) {
+void argo1_insertion_sort(int left, int right) {
   int j;
-  for(int i = 1; i < n; i++) {
+  for(int i = left + 1; i <= right; i++) {
     int temp = arr[i];
-    for(j = i - 1; j >= 0 && arr[j] > temp; j--) {
+    for(j = i - 1; j >= left && arr[j] > temp; j--) {
       arr[j + 1] = arr[j];
     }
     arr[j + 1] = temp;
@@ -86,7 +86,6 @@ void argo2_quick_sort(int left, int right) {
     argo2_quick_sort(left, pivot - 1);
     argo2_quick_sort(pivot + 1, right);
   }
-
 }
 
 int quick_sort_partition(int left, int right) {
@@ -147,7 +146,27 @@ void merge_sort_merge(int left, int middle, int right) {
 }
 
 void argo4_my_sort(void) {
+  int size = 32;
 
+  for(int i = 0; i < n; i += size) {
+    if(i + size - 1 < n - 1) {
+      argo1_insertion_sort(i, i + size - 1);
+    }
+    else {
+      argo1_insertion_sort(i, n- 1);
+    }
+  }
 
-  return;
+  for(int i = size; i < n; i *= 2) {
+    for(int left = 0; left < n; left += 2 * i) {
+      int mid = left + i - 1;
+      int right = left + 2 * i - 1;
+      if(right > n - 1) {
+        right = n - 1;
+      }
+      if(mid < right) {
+        merge_sort_merge(left, mid, right);
+      }
+    }
+  }
 }
