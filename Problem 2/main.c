@@ -9,6 +9,7 @@ int quick_sort_partition(int left, int right);
 void argo3_merge_sort(int left, int right);
 void merge_sort_merge(int left, int middle, int right);
 void argo4_my_sort(void);
+int argo4_test(void);
 
 int n;
 int *arr;
@@ -146,6 +147,11 @@ void merge_sort_merge(int left, int middle, int right) {
 }
 
 void argo4_my_sort(void) {
+  if(argo4_test() == 0) {
+    argo2_quick_sort(0, n - 1);
+    return;
+  }
+
   int size = 32;
 
   for(int i = 0; i < n; i += size) {
@@ -169,4 +175,27 @@ void argo4_my_sort(void) {
       }
     }
   }
+}
+
+int argo4_test(void) {
+  if(n <= 100) {
+    return 1;
+  }
+
+  int size = n / 100;
+  if(size > 100) {
+    size = 100;
+  }
+  int temp = 0;
+
+  for(int i = 1; i < n; i += size) {
+    if(arr[i] > arr[i - 1]) {
+      temp++;
+      if(temp >= 50) {
+        return 0;
+      }
+    }
+  }
+
+  return 1;
 }
