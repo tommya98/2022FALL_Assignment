@@ -61,9 +61,9 @@ process_execute (const char *file_name)
   sema_down(&thread_current()->file_sema);
   if (tid == TID_ERROR)
     palloc_free_page (fn_copy);
-  struct list_elem *e = NULL;
-	struct thread *t = NULL;
-  for(e = list_begin(&(thread_current())->child); e != list_end(&(thread_current()->child)); e = list_next(e)) {
+  struct list_elem *e;
+	struct thread *t;
+  for(e = list_begin(&thread_current()->child); e != list_end(&thread_current()->child); e = list_next(e)) {
     t = list_entry(e, struct thread, childelem);
     if(t->flag == 1) {
       return process_wait(tid);
@@ -175,12 +175,12 @@ process_exit (void)
 
   // Proj 2 implement
   for(int i = 3; i < 128; i++) {
-    if(thread_current()->fd_array[i] != NULL) {
-      file_close(thread_current()->fd_array[i]);
-      thread_current()->fd_array[i] = NULL;
+    if(cur->fd_array[i] != NULL) {
+      file_close(cur->fd_array[i]);
+      cur->fd_array[i] = NULL;
     }
   }
-  file_close(thread_current()->cur_file);
+  file_close(cur->cur_file);
 
   // Proj 1 implement
   struct thread *child;

@@ -155,7 +155,7 @@ page_fault (struct intr_frame *f)
       exit(-1);
    }
 
-  // Proj 1 implement
+  // Proj 2 implement
   if(not_present || is_kernel_vaddr(fault_addr)) {
       exit(-1);
   }

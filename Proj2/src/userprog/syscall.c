@@ -264,13 +264,13 @@ int open(const char *file) {
     return -1;
   }
 
-  //struct thread *t = thread_current();
+  struct thread *t = thread_current();
   for(int i = 3; i < 128; i++) {
-    if(thread_current()->fd_array[i] == NULL) {
-      if (strcmp(thread_current()->name, file) == 0) {
+    if(t->fd_array[i] == NULL) {
+      if (strcmp(t->name, file) == 0) {
         file_deny_write(fp);
       }
-      thread_current()->fd_array[i] = fp;
+      t->fd_array[i] = fp;
       lock_release(&file_lock);
       return i;
     }
@@ -281,15 +281,17 @@ int open(const char *file) {
 
 void close(int fd) {
   lock_acquire(&file_lock);
-  file_close(thread_current()->fd_array[fd]);
-  thread_current()->fd_array[fd] = NULL;
+  struct thread *t = thread_current();
+  file_close(t->fd_array[fd]);
+  t->fd_array[fd] = NULL;
   lock_release(&file_lock);
 }
 
 int filesize(int fd) {
   int ret;
   lock_acquire(&file_lock);
-  ret = file_length(thread_current()->fd_array[fd]);
+  struct thread *t = thread_current();
+  ret = file_length(t->fd_array[fd]);
   lock_release(&file_lock);
   return ret;
 }
@@ -308,11 +310,12 @@ int read(int fd, void *buffer, unsigned size) {
   }
   else if(fd > 2) {
     int ret;
-    if(thread_current()->fd_array[fd] == NULL) {
+    struct thread *t = thread_current();
+    if(t->fd_array[fd] == NULL) {
       lock_release(&file_lock);
       exit(-1);
     }
-    ret = file_read(thread_current()->fd_array[fd], buffer, size);
+    ret = file_read(t->fd_array[fd], buffer, size);
     lock_release(&file_lock);
     return ret;
   }
@@ -331,14 +334,15 @@ int write(int fd, const void *buffer, unsigned size) {
   }
   else if(fd > 2){
     int ret;
-    if(thread_current()->fd_array[fd] == NULL) {
+    struct thread *t = thread_current();
+    if(t->fd_array[fd] == NULL) {
       lock_release(&file_lock);
       exit(-1);
     }
-    if (thread_current()->fd_array[fd]->deny_write) {
-      file_deny_write(thread_current()->fd_array[fd]);
+    if (t->fd_array[fd]->deny_write) {
+      file_deny_write(t->fd_array[fd]);
     }
-    ret = file_write(thread_current()->fd_array[fd], buffer, size);
+    ret = file_write(t->fd_array[fd], buffer, size);
     lock_release(&file_lock);
     return ret;
   }
@@ -350,14 +354,16 @@ int write(int fd, const void *buffer, unsigned size) {
 
 void seek(int fd, unsigned position) {
   lock_acquire(&file_lock);
-  file_seek(thread_current()->fd_array[fd], position);
+  struct thread *t = thread_current();
+  file_seek(t->fd_array[fd], position);
   lock_release(&file_lock);
 }
 
 unsigned tell(int fd) {
   unsigned ret;
   lock_acquire(&file_lock);
-  ret = file_tell(thread_current()->fd_array[fd]);
+  struct thread *t = thread_current();
+  ret = file_tell(t->fd_array[fd]);
   lock_release(&file_lock);
   return ret;
 }
