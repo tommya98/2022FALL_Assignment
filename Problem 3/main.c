@@ -20,7 +20,7 @@ struct node* tree[128];
 void init(void);
 struct node* make_node(char c, int freq, struct node* left, struct node* right);
 struct node* make_huffman_tree(void);
-void make_code(struct node* root, long long a);
+void make_code(struct node* root, char *code_temp);
 void modify_code(void);
 void print_metadata(FILE* fp);
 void put_bit(unsigned a, FILE *fp, int mode);
@@ -52,11 +52,10 @@ int main(int argc, char* argv[]) {
     fclose(fp);
 
     root = make_huffman_tree();
-    make_code(root, 1);
-    modify_code();
+    make_code(root, "\0");
 
     // print_tree(root);
-    // printf("=============================================");
+    // printf("=============================================\n");
     // print_code();
 
     int file_name_len = strlen(argv[2]);
@@ -73,7 +72,7 @@ int main(int argc, char* argv[]) {
       }
     }
     put_bit(0, fp2, 1);
-                
+
     fclose(fp);
     fclose(fp2);
   }
@@ -92,11 +91,10 @@ int main(int argc, char* argv[]) {
     read_meatdata(fp);
 
     root = make_huffman_tree();
-    make_code(root, 1);
-    modify_code();
+    make_code(root, "\0");
 
     // print_tree(root);
-    // printf("=============================================");
+    // printf("=============================================\n");
     // print_code();
 
     decoding(root, fp, fp2);
@@ -174,16 +172,21 @@ struct node* make_huffman_tree(void) {
   return tree[min];
 }
 
-void make_code(struct node* root, long long a) {
+void make_code(struct node* root, char *code_temp) {
+  char code_temp_2[128];
   if(root->left == NULL && root->right == NULL) {
-    code[root->c] = a;
+    strcpy(code_char[root->c], code_temp);
   }
   else {
     if(root->left != NULL) {
-      make_code(root->left, a * 10);
+      strcpy(code_temp_2, code_temp);
+      strcat(code_temp_2, "0");
+      make_code(root->left, code_temp_2);
     }
     if(root->right != NULL) {
-      make_code(root->right, a * 10 + 1);
+      strcpy(code_temp_2, code_temp);
+      strcat(code_temp_2, "1");
+      make_code(root->right, code_temp_2);
     }
   }
 }
