@@ -4,31 +4,27 @@
 
 struct node {
   char c;
-  int freq;
+  long long freq;
   struct node* left;
   struct node* right;
 };
 
 FILE *fp, *fp2;
-int n, bits, size;
-int char_freq[128];
+long long n, bits, size;
+long long char_freq[128];
 long long code[128];
 char code_char[128][128];
 char c, word;
 struct node* tree[128];
 
 void init(void);
-struct node* make_node(char c, int freq, struct node* left, struct node* right);
+struct node* make_node(char c, long long freq, struct node* left, struct node* right);
 struct node* make_huffman_tree(void);
 void make_code(struct node* root, char *code_temp);
-void modify_code(void);
 void print_metadata(FILE* fp);
 void put_bit(unsigned a, FILE *fp, int mode);
 void read_meatdata(FILE* fp);
 void decoding(struct node* root, FILE* fp, FILE* fp2);
-
-void print_tree(struct node* node);
-void print_code(void);
 
 int main(int argc, char* argv[]) {
   struct node* root;
@@ -53,10 +49,6 @@ int main(int argc, char* argv[]) {
 
     root = make_huffman_tree();
     make_code(root, "\0");
-
-    // print_tree(root);
-    // printf("=============================================\n");
-    // print_code();
 
     int file_name_len = strlen(argv[2]);
     char result_file_name[file_name_len + 3];
@@ -93,10 +85,6 @@ int main(int argc, char* argv[]) {
     root = make_huffman_tree();
     make_code(root, "\0");
 
-    // print_tree(root);
-    // printf("=============================================\n");
-    // print_code();
-
     decoding(root, fp, fp2);
 
     fclose(fp);
@@ -119,12 +107,11 @@ void init(void) {
   word = 0;
   for(int i = 0; i < 128; i++) {
     char_freq[i] = 0;
-    code[i] = -1;
     tree[i] = NULL;
   }
 }
 
-struct node* make_node(char c, int freq, struct node* left, struct node* right) {
+struct node* make_node(char c, long long freq, struct node* left, struct node* right) {
   struct node* temp = (struct node*)malloc(sizeof(struct node));
   temp->c = c;
   temp->freq = freq;
@@ -144,7 +131,7 @@ struct node* make_huffman_tree(void) {
     }
   }
 
-  for(int i = 0; i < n - 1; i++) {
+  for(long long i = 0; i < n - 1; i++) {
     t = 0;
     while(check[t] == -1) {
       t++;
@@ -191,23 +178,10 @@ void make_code(struct node* root, char *code_temp) {
   }
 }
 
-void modify_code(void) {
-  for(int i = 0; i < 128; i++) {
-    if(code[i] == -1) {
-      continue;
-    }
-
-    sprintf(code_char[i], "%lld", code[i]);
-    for(int j = 0; j < strlen(code_char[i]); j++) {
-      code_char[i][j] = code_char[i][j + 1];
-    }
-  }
-}
-
 void print_metadata(FILE* fp) {
   for(int i = 0; i < 128; i++) {
     if(char_freq[i] != 0) {
-      fprintf(fp, "%c%d ", i, char_freq[i]);
+      fprintf(fp, "%c%lld ", i, char_freq[i]);
     }
   }
   fprintf(fp, "%c%d", 'a', 0);
@@ -224,9 +198,9 @@ void put_bit(unsigned a, FILE *fp, int mode) {
 }
 
 void read_meatdata(FILE* fp) {
-  int t;
+  long long t;
   while(1) {
-    fscanf(fp, "%c%d", &c, &t);
+    fscanf(fp, "%c%lld", &c, &t);
     if(t == 0) {
       break;
     }
@@ -257,28 +231,6 @@ void decoding(struct node* root, FILE* fp, FILE* fp2) {
       if(size == root->freq) {
         return;
       }
-    }
-  }
-}
-
-void print_tree(struct node* node) {
-  if(node == NULL) {
-    return;
-  }
-
-  printf("%c freq: %d ", node->c, node->freq);
-  if(node->left != NULL) {
-    printf("left: %c, right: %c\n", node->left->c, node->right->c);
-  }
-  printf("\n");
-  print_tree(node->left);
-  print_tree(node->right);
-}
-
-void print_code(void) {
-  for(int i = 0; i < 128; i++) {
-    if(code[i] != -1) {
-      printf("%c: %s\n", i, code_char[i]);
     }
   }
 }
